@@ -14,6 +14,8 @@ builder.Services.AddDbContext<PrescriptionDataContext>(opt => opt.UseSqlServer(c
 builder.Services.AddControllers();
 builder.Services.AddScoped<IPrescriptionRepository , PrescriptionRepository>();
 
+//Registering AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
