@@ -35,6 +35,16 @@ namespace PrescriptionAPI.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<PrescriptionReadDto> Get(int id)
+        {
+            var prescription = _prescriptionRepository.Get(id);
+            if(prescription == null)
+            {
+                return NotFound(id);
+            }
+            return (_mapper.Map<PrescriptionReadDto>(prescription));
+        }
         
     }
 }
