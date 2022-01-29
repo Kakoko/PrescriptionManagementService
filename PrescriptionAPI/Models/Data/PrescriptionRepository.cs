@@ -11,7 +11,7 @@
         }
         public void Create(Prescription prescription)
         {
-            throw new NotImplementedException();
+            _context.Add(prescription);
         }
 
         public void Delete(int id)
@@ -27,6 +27,11 @@
         public IEnumerable<Prescription> GetAll()
         {
             return _context.Prescriptions.ToList();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
         }
 
         public void Update(Prescription prescription)

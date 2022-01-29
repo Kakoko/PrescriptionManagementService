@@ -33,6 +33,11 @@
             return prescriptions;
         }
 
+        public bool SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Prescription prescription)
         {
             throw new NotImplementedException();

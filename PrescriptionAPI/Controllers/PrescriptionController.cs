@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PrescriptionAPI.Dto;
+using PrescriptionAPI.Models;
 using PrescriptionAPI.Models.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -35,8 +36,8 @@ namespace PrescriptionAPI.Controllers
 
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<PrescriptionReadDto> Get(int id)
+        [HttpGet("{id}" , Name = "GetPrescriptionById")]
+        public ActionResult<PrescriptionReadDto> GetPrescriptionById(int id)
         {
             var prescription = _prescriptionRepository.Get(id);
             if(prescription == null)
@@ -44,6 +45,24 @@ namespace PrescriptionAPI.Controllers
                 return NotFound(id);
             }
             return (_mapper.Map<PrescriptionReadDto>(prescription));
+        }
+
+        [HttpPost]
+        public ActionResult<PrescriptionReadDto> CreatePrescription(
+            PrescriptionCreateDto prescriptionCreateDto)
+        {
+
+            //Mapping to Persist to Data
+            var prescriptionModel = _mapper.Map<Prescription>(prescriptionCreateDto);
+
+            _prescriptionRepository.Create(prescriptionModel);
+            _prescriptionRepository.SaveChanges();
+
+            //Mapp from Prescription to its Dtod
+            var prescriptionReadDto = _mapper.Map<PrescriptionReadDto>(prescriptionModel);
+
+            return CreatedAtRoute(nameof(GetPrescriptionById),
+                new { Id = prescriptionReadDto.Id }, prescriptionReadDto);
         }
         
     }

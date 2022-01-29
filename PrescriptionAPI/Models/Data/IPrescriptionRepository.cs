@@ -7,5 +7,6 @@
         void Delete(int id);
         void Update(Prescription prescription);
         void Create(Prescription prescription);
+        bool SaveChanges();
     }
 }
